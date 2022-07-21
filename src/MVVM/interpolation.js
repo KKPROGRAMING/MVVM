@@ -1,5 +1,12 @@
-let matchLeft = "{{";
-let matchRight = "}}";
+//用于识别绑定数据的特殊标记
+const matchLeft = "{{";
+const matchRight = "}}";
+/**
+ * 参考vue框架中的插值语法，通过插值语法实现数据单向绑定，大致步骤如下：
+ * 1.遍历View中的每个节点，直到寻找到符合目标的文字节点；
+ * 2.对做了特定标记的位置进行数据的替换；
+ * 3.将这一数据替换的操作添加入触发事件列表中，每次Model中的数据有变化都会触发这一操作
+ */
 export function interpolation(vm) {
     SearchInterpolation.call(vm, vm.targetNode);
 }

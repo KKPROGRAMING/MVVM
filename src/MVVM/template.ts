@@ -1,15 +1,18 @@
-import { VM } from "./index.js";
+import { VM } from "./viewModel.js";
 
-let match_single = "bind-";
-let match_double = "model-";
+//用于识别绑定数据的特殊标记
+const match_single: string = "bind-";
+const match_double: string = "model-";
 
 /**
+ * 参考vue框架中的模板语法，通过插值语法实现数据单向绑定与双向绑定。
  * 这里函数的结构与插值语法的函数结构类似，大致经历以下几个步骤：
- * 1.遍历所绑定View中的每个节点，直到寻找到符合目标的节点；
- * 2.对做了特定标记的位置进行数据的替换；
- * 3.将这一数据替换的操作添加入触发事件列表中，每次Model中的数据有变化都会触发这一操作
+ * 1.遍历View中节点，找到符合目标的节点；
+ * 2.对特定位置数据替换；
+ * 3.将操作添加入触发事件列表中
  */
-export function template(vm: VM) {
+
+export function template(vm: VM): void {
   SearchTemplate_bind.call(vm, vm.targetNode); //单向绑定
   SearchTemplate_model.call(vm, vm.targetNode); //双向绑定
 }
@@ -104,13 +107,13 @@ function DoTemplate_model(
     }
 
     item[attribute] = this[bindData];
-    /**
-     * 添加监听器，当View中的数据有变化时同步到ViewModel中的数据
-     */
 
     //from view to model
-    item.addEventListener('change',()=>{
-      //使用箭头函数，保持this指向ViewModel实体
+    item.addEventListener("change", () => {
+      /**
+       * 添加监听器，当View中的数据有变化时同步到ViewModel中的数据
+       * 使用箭头函数，保持this指向ViewModel实体
+       */
       this[bindData] = item[attribute];
     });
 

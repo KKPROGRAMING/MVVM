@@ -1,9 +1,17 @@
-import { VM } from "./index.js";
+import { VM } from "./viewModel.js";
 
-let matchLeft: string = "{{";
-let matchRight: string = "}}";
+//用于识别绑定数据的特殊标记
+const matchLeft: string = "{{";
+const matchRight: string = "}}";
 
-export function interpolation(vm: VM) {
+/**
+ * 参考vue框架中的插值语法，通过插值语法实现数据单向绑定，大致步骤如下：
+ * 1.遍历View中的每个节点，直到寻找到符合目标的文字节点；
+ * 2.对做了特定标记的位置进行数据的替换；
+ * 3.将这一数据替换的操作添加入触发事件列表中，每次Model中的数据有变化都会触发这一操作
+ */
+
+export function interpolation(vm: VM): void {
   SearchInterpolation.call(vm, vm.targetNode);
 }
 
@@ -11,8 +19,7 @@ function SearchInterpolation(targetNode: Element): void {
   for (let item of targetNode.childNodes) {
     if (item.childNodes.length !== 0) {
       SearchInterpolation.call(this, item as Element);
-    } 
-    else if (item.nodeType === 3) {
+    } else if (item.nodeType === 3) {
       /**nodeType=3 : text
        * 参照vue中的插值语法，对文字节点的内容进行检查
        * */
@@ -31,10 +38,7 @@ function SearchInterpolation(targetNode: Element): void {
   }
 }
 
-function DoInterpolation(
-  item: Element,
-  bindData: string
-): void {
+function DoInterpolation(item: Element, bindData: string): void {
   if (this[bindData] !== null && this[bindData] !== undefined) {
     //如果针对当前数据的触发事件列表不存在，则先初始化
     if (this.singleBind[bindData] === (null || undefined)) {
@@ -58,9 +62,9 @@ function DoInterpolation(
         this[bindData] +
         item.nodeValue.toString().substring(mark_end, content.length);
 
-        //更新标记值，方便下一次进行数据的替换
-        mark_end = mark_start + this[bindData].length;
-        content = item.nodeValue.toString();
+      //更新标记值，方便下一次进行数据的替换
+      mark_end = mark_start + this[bindData].length;
+      content = item.nodeValue.toString();
     });
   }
 }
