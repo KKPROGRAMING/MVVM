@@ -10,6 +10,7 @@ class ViewModel {
         this.targetNode = document.querySelector(target);
         this.$data = data;
         this.singleBind = {};
+        this.doubleBind = {};
         addProxy(this, data);
         interpolation(this);
         template(this);
@@ -25,12 +26,12 @@ let data = {
 };
 const vm1 = new ViewModel("#root", data);
 console.log(vm1);
-setTimeout(() => {
-    vm1["name"] = "hey";
-}, 2000);
-setTimeout(() => {
-    vm1["name"] = "Sophie";
-}, 4000);
-setTimeout(() => {
-    vm1["name"] = "may";
-}, 6000);
+// setTimeout(() => {
+//   vm1["name"] = "hey";
+// }, 2000);
+// setTimeout(() => {
+//   vm1["name"] = "Sophie";
+// }, 4000);
+// setTimeout(() => {
+//     vm1["name"] = "may";
+//   }, 6000);

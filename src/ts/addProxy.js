@@ -23,11 +23,16 @@ export function addProxy(vm, data) {
             },
             set(newValue) {
                 this.$data[key] = newValue;
+                /**单向&双向绑定，通过触发事件列表中的记录进行控制操作，
+                   * 达到View与Model之间数据绑定的效果
+                   * */
                 if (this.singleBind[key] !== (null || undefined)) {
-                    /**单向&双向绑定，通过触发事件列表中的记录进行控制操作，
-                     * 达到View与Model之间数据绑定的效果
-                     * */
                     for (let tmp of this.singleBind[key]) {
+                        tmp.call(this);
+                    }
+                }
+                if (this.doubleBind[key] !== (null || undefined)) {
+                    for (let tmp of this.doubleBind[key]) {
                         tmp.call(this);
                     }
                 }

@@ -13,12 +13,14 @@ export type DATA = {[key:string]:any};
 class ViewModel {
   public targetNode: Element; //View(订阅者)
   public $data: object; //Model（订阅者）
-  public singleBind: { [notice: string]: Array<Function> }; //触发事件列表，关注的事件：需要进行的操作
+  public singleBind: { [notice: string]: Array<Function> }; //需要进行的操作
+  public doubleBind: { [notice: string]: Array<Function> }; //需要进行的操作
 
   constructor(target: string, data: DATA) {
     this.targetNode = document.querySelector(target);
     this.$data = data;
     this.singleBind = {};
+    this.doubleBind = {};
     addProxy(this, data);
     interpolation(this);
     template(this);
@@ -38,14 +40,14 @@ let data = {
 const vm1 = new ViewModel("#root", data);
 console.log(vm1);
 
-setTimeout(() => {
-  vm1["name"] = "hey";
-}, 2000);
+// setTimeout(() => {
+//   vm1["name"] = "hey";
+// }, 2000);
 
-setTimeout(() => {
-  vm1["name"] = "Sophie";
-}, 4000);
+// setTimeout(() => {
+//   vm1["name"] = "Sophie";
+// }, 4000);
 
-setTimeout(() => {
-    vm1["name"] = "may";
-  }, 6000);
+// setTimeout(() => {
+//     vm1["name"] = "may";
+//   }, 6000);

@@ -10,10 +10,11 @@ let match_double = "model-";
  * 3.将这一数据替换的操作添加入触发事件列表中，每次Model中的数据有变化都会触发这一操作
  */
 export function template(vm: VM) {
-  SearchTemplate_bind.call(vm, vm.targetNode);//单向绑定
-  SearchTemplate_model.call(vm,vm.targetNode);//双向绑定
+  SearchTemplate_bind.call(vm, vm.targetNode); //单向绑定
+  SearchTemplate_model.call(vm, vm.targetNode); //双向绑定
 }
 
+//单向绑定
 function SearchTemplate_bind(targetNode: Element): void {
   if (targetNode.firstChild !== null) {
     //对孩子节点的属性进行检查
@@ -44,8 +45,6 @@ function SearchTemplate_bind(targetNode: Element): void {
   }
 }
 
-function SearchTemplate_model(targetNode: Element): void {}
-
 function DoTemplate_bind(
   item: Element,
   attribute: string,
@@ -58,13 +57,66 @@ function DoTemplate_bind(
     }
 
     //将函数添加入触发事件列表前，先将数据放入指定属性中
-    item.setAttribute(attribute, this[bindData]);
+    item[attribute] = this[bindData];
 
     //将函数添加入触发事件列表
     this.singleBind[bindData].push(function () {
-      item.setAttribute(attribute, this[bindData]);
+      item[attribute] = this[bindData];
     });
   }
 }
 
-function DoTemplate_model(item: Element, bindData: string): void {}
+//双向绑定
+function SearchTemplate_model(targetNode: Element): void {
+  if (targetNode.firstChild !== null) {
+    SearchTemplate_model.call(this, targetNode.firstChild as Element);
+  }
+  if (targetNode.nextSibling !== null) {
+    SearchTemplate_model.call(this, targetNode.nextSibling as Element);
+  }
+
+  if (targetNode.attributes !== undefined) {
+    for (let attribute of targetNode.attributes) {
+      if (attribute.name.indexOf(match_double) === 0) {
+        if (attribute.name.length === match_double.length) {
+          DoTemplate_model.call(this, targetNode, "value", attribute.value);
+        } else {
+          DoTemplate_model.call(
+            this,
+            targetNode,
+            attribute.name.slice(match_double.length),
+            attribute.value
+          );
+        }
+      }
+    }
+  }
+}
+
+function DoTemplate_model(
+  item: Element,
+  attribute: string,
+  bindData: string
+): void {
+  if (this[bindData] !== null && this[bindData] !== undefined) {
+    if (this.doubleBind[bindData] === (null || undefined)) {
+      this.doubleBind[bindData] = [];
+    }
+
+    item[attribute] = this[bindData];
+    /**
+     * 添加监听器，当View中的数据有变化时同步到ViewModel中的数据
+     */
+
+    //from view to model
+    item.addEventListener('change',()=>{
+      //使用箭头函数，保持this指向ViewModel实体
+      this[bindData] = item[attribute];
+    });
+
+    //from model to view
+    this.doubleBind[bindData].push(function () {
+      item[attribute] = this[bindData];
+    });
+  }
+}
