@@ -1,3 +1,8 @@
+/**
+ * 数据代理，不直接改变原数据$data，
+ * 而是通过直接挂载在ViewModel上的数据进行代理，方便操作
+    this.$data[key]===this[key] => true
+ */
 export function addProxy(vm, data) {
     if (data === null) {
         return;
@@ -5,10 +10,11 @@ export function addProxy(vm, data) {
     let keys = Object.keys(data);
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i];
-        //数据代理，不直接改变原数据$data，而是通过直接挂载在ViewModel上的数据进行代理
-        //this.$data[key]===this[key] => true
         /**
-         * 对对象的处理还没有做好，所以视图中要插入对象值时呈现的效果是[object Object]
+         * 对对象的处理还没有做好，所以视图中要插入对象值时呈现的效果是[object Object],
+         * 需要考虑与解决的问题如下：
+         * （1）如何判断当前值是否为一个对象？
+         * （2）如何生成定位到当前值的路径？
          */
         Object.defineProperty(vm, key, {
             enumerable: true,

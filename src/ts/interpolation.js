@@ -27,6 +27,7 @@ function SearchInterpolation(targetNode) {
 }
 function DoInterpolation(item, bindData) {
     if (this[bindData] !== null && this[bindData] !== undefined) {
+        //如果针对当前数据的触发事件列表不存在，则先初始化
         if (this.singleBind[bindData] === (null || undefined)) {
             this.singleBind[bindData] = [];
         }

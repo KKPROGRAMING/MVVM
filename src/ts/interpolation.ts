@@ -7,10 +7,10 @@ export function interpolation(vm: VM) {
   SearchInterpolation.call(vm, vm.targetNode);
 }
 
-function SearchInterpolation(targetNode: HTMLElement | ChildNode): void {
+function SearchInterpolation(targetNode: Element): void {
   for (let item of targetNode.childNodes) {
     if (item.childNodes.length !== 0) {
-      SearchInterpolation.call(this, item);
+      SearchInterpolation.call(this, item as Element);
     } 
     else if (item.nodeType === 3) {
       /**nodeType=3 : text
@@ -24,7 +24,7 @@ function SearchInterpolation(targetNode: HTMLElement | ChildNode): void {
 
         if (start !== -1 && end !== -1) {
           let bindData: string = content.slice(start + matchLeft.length, end);
-          DoInterpolation.call(this, item, bindData);
+          DoInterpolation.call(this, item as Element, bindData);
         }
       }
     }
@@ -32,10 +32,11 @@ function SearchInterpolation(targetNode: HTMLElement | ChildNode): void {
 }
 
 function DoInterpolation(
-  item: HTMLElement | ChildNode,
+  item: Element,
   bindData: string
 ): void {
   if (this[bindData] !== null && this[bindData] !== undefined) {
+    //如果针对当前数据的触发事件列表不存在，则先初始化
     if (this.singleBind[bindData] === (null || undefined)) {
       this.singleBind[bindData] = [];
     }

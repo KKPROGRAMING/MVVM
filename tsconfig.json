@@ -1,8 +1,7 @@
 {
     "include":[
         "src/ts/index.ts",
-        "src/ts/*"
-, "src/ts/ts/addProxy.ts", "src/ts/ts/interpolation.ts", "src/index.js"    ],
+        "src/ts/*"  ],
     "compilerOptions": {
         "target":"ES2015",
         "module":"ES2015",
