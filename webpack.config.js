@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "development",
 
-  entry: "./src/ts/index.ts",
+  entry: "./src/MVVM/index.ts",
 
   output: {
     path: path.resolve(__dirname, "dist"),
