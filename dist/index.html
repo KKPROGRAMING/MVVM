@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Binding</title>
+  <script defer src="bundle.js"></script></head>
+  <body id="root">
+    <h3>数据绑定</h3>
+    <p>这是一个数据单向/双向绑定的简单展示。</p>
+    <p>
+      请在输入框中输入或更改一些内容，展示板块会对您传入和改变的数据实时变更。
+    </p>
+    <p>您也可以打开控制台观察输出的这一ViewModel实体。</p>
+    <hr />
+    <div class="show">
+      <label for="test">please input your name:</label>
+      <input type="text" id="name" model-value="name" /><br />
+      <strong>Hello! My name is {{name}}.</strong>
+    </div>
+    <div class="show">
+      <label for="gender">please input your gender:</label>
+      <input type="text" id="gender" model-value="gender" /><br />
+      <strong>I'm a {{gender}}.</strong>
+    </div>
+    <div class="show">
+        <label for="address">please input the address:</label>
+        <input type="text" id="address" model-value="address" /><br />
+        <strong>The address is {{address}}.</strong>
+      </div>
+  </body>
+</html>
