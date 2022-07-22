@@ -14,7 +14,7 @@ a simple framework of MVVM
 进度：修改了展示页面，要求大致实现，待单元测试
 
 ---
-## :tw-1f530:INTRO
+## INTRO
 这是一个基于发布-订阅模式实现的简单的MVVM框架。  
 
 MVVM中包含Model\View\ViewModel，  
@@ -24,22 +24,22 @@ ViewModel作为中介与调度中心，连接分离的View与Model。
 项目着重于ViewModel的设计与实现，View与Model可由使用者提供。  
 
 
-#### :tw-1f423:使用说明：
+#### 使用说明：
 使用这一简单的MVVM框架时，大致步骤如下：
 1.    提供要绑定的View与Model，创造一个ViewModel实体
 2.    在View中对希望绑定的数据做一些特殊的标记，让ViewModel能够检测到
 
-:tw-1f383:**单向绑定（插值语法）**
+**单向绑定（插值语法）**
 仅限于在文字节点中定义，格式为 {{dataName}}  
 
 `<strong>Hello! My name is {{name}}.</strong>`
 
-:tw-1f383:**单向绑定（模板语法）**
+**单向绑定（模板语法）**
 仅限于在属性节点中定义，格式为 bind-attributeName:dataName  
 
 `<input type="text" id="name" bind-value="name" />`
 
-:tw-1f383:**双向绑定（模板语法）**
+**双向绑定（模板语法）**
 仅限于在属性节点中定义，格式为 model-attributeName:dataName  
 
 `<input type="text" id="name" model-value="age" />`
@@ -64,7 +64,7 @@ console.log(vm);
 ```
 当用户希望修改Model中的数据、或者希望通过View对Model中的数据进行改动时，这一操作都会被用户创建的ViewModel实体监听并拦截，并由其完成系列操作。
 
-#### :tw-1f424:模块构成：
+#### 模块构成：
 **1. viewModel.ts**
 创造一个ViewModel类，类中包含四个属性与一个双参数构造方法：：
    - **targetNode** 连接MVVM中的View（视图）
