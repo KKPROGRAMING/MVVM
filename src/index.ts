@@ -1,6 +1,5 @@
 const css = require('./index.css');
-
-import { DATA,ViewModel } from "./MVVM/viewModel.js";
+import { ViewModel,DATA } from "./MVVM/viewModel";
 
 //绑定的Model
 let data:DATA = {
@@ -15,3 +14,6 @@ let element:string = "#root";
 //创造并打印ViewModel实体
 const vm = new ViewModel(element, data);
 console.log(vm);
+
+
+

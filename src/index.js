@@ -1,5 +1,5 @@
 const css = require('./index.css');
-import { ViewModel } from "./MVVM/viewModel.js";
+import { ViewModel } from "./MVVM/viewModel";
 let data = {
     name: "jack",
     gender: 'male',
