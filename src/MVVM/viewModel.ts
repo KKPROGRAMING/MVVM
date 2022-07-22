@@ -3,7 +3,7 @@ import { interpolation } from "./interpolation.js";
 import { template } from "./template.js";
 
 export type VM = ViewModel;
-export type DATA = {[key:string]:any};
+export type DATA = {[key:string]:string};
 
 /**
  * targetNode 绑定到的视图，通过querySelector(target)定位

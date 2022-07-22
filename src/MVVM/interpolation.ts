@@ -60,7 +60,7 @@ function DoInterpolation(item: Element, bindData: string): void {
       item.nodeValue =
         item.nodeValue.toString().substring(0, mark_start) +
         this[bindData] +
-        item.nodeValue.toString().substring(mark_end, content.length);
+        item.nodeValue.toString().substring(mark_end);
 
       //更新标记值，方便下一次进行数据的替换
       mark_end = mark_start + this[bindData].length;

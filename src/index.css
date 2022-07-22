@@ -1,0 +1,15 @@
+.show {
+    width: 35rem;
+    height: 7rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    padding: 1rem;
+}
+
+input[type='text']{
+    width: 12rem;
+    height: 2rem;
+}
