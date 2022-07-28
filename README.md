@@ -65,29 +65,31 @@ console.log(vm);
 当用户希望修改Model中的数据、或者希望通过View对Model中的数据进行改动时，这一操作都会被用户创建的ViewModel实体监听并拦截，并由其完成系列操作。
 
 #### 模块构成：
-**1. viewModel.ts**
+**1. viewModel.ts**   
 创造一个ViewModel类，类中包含四个属性与一个双参数构造方法：：
    - **targetNode** 连接MVVM中的View（视图）
    - **$data**  连接或保存MVVM中的Model（数据）
    - **singleBind**  单向绑定的触发事件列表，即数据改变时作为调度中心的ViewModel要进行的操作
    - **doubleBind**  双向绑定的触发事件列表
-   - **constructor(target: string, data: DATA)**  参数分别为用户希望绑定的View与Model目标
+   - **constructor(target: string, data: DATA)**  参数分别为用户希望绑定的View与Model目标   
    
-**2.addProxy.ts**
+   
+   
+**2.addProxy.ts**   
 数据代理，不直接改变原数据$data， 而是通过直接挂载在ViewModel上的数据进行代理，方便操作。  
-
 主要通过Object.defineProperty()方法实现。  
+此外，还在各数据对应的setter中添加了遍历单向\双向绑定事件触发列表、并执行对应事件的操作。   
 
-此外，还在各数据对应的setter中添加了遍历单向\双向绑定事件触发列表、并执行对应事件的操作。
 
-**3.interpolation.ts**
+**3.interpolation.ts**   
 参考vue框架中的插值语法，通过插值语法实现数据**单向绑定**，大致步骤如下：
  * 遍历View中的每个节点，直到寻找到符合目标的*文字节点*；
  * 对做了特定标记的位置进行数据的替换；
- * 将这一数据替换的操作添加入单向绑定触发事件列表中，每次Model中的数据有变化都会触发这一操作。
+ * 将这一数据替换的操作添加入单向绑定触发事件列表中，每次Model中的数据有变化都会触发这一操作。   
  
-**4.template.ts**
- 参考vue框架中的模板语法，通过插值语法实现数据**单向绑定**与**双向绑定**。
+ 
+**4.template.ts**   
+ 参考vue框架中的模板语法，通过模板语法实现数据**单向绑定**与**双向绑定**。
  这里函数的结构与插值语法的函数结构类似，大致经历以下几个步骤：
  * 1.遍历View中节点，找到符合目标的节点；
  * 2.对特定位置数据替换；
